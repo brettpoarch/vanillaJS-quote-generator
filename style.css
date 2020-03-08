@@ -1,0 +1,16 @@
+html {
+	box-sizing:border-box;
+}
+
+*, *:before, *:after {
+	box-sizing:inherit;
+}
+
+body {
+	background-color: rgb(242, 136, 136);
+}
+
+#container{
+	background-color: white;
+	margin: 25%;
+}
