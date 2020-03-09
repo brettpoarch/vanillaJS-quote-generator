@@ -1,6 +1,9 @@
 const display = document.querySelector('#root');
 const button = document.querySelector('#quote-generator');
 const body = document.querySelector('body');
+const twitter = document.querySelector('#tweet-quote');
+
+// https://quotesondesign.com/wp-json/wp/v2/posts/?orderby=rand
 
 function setColor(){
 	const red = Math.floor(Math.random() * 256);
@@ -10,28 +13,31 @@ function setColor(){
 	
 	return body.style.backgroundColor = `rgb(${rgb})`
 
-}
+};
 
 async function getQuote() {
-	const response = await fetch(`https://quotesondesign.com/wp-json/wp/v2/posts/?orderby=rand`);
+	const response = await fetch(`https://api.whatdoestrumpthink.com/api/v1/quotes/random`);
 	const data = await response.json();
 	return data;
-}
+};
 
 
 async function render(){
-	const randomNumber = Math.floor(Math.random() * 10);
 	const quotes = await getQuote();
-	const quote = quotes[randomNumber].content.rendered;
-	const author = quotes[randomNumber].title.rendered;
-	// quotes.map(quote => quote.content.rendered)
-	// quotes.map(quote => quote.title.rendered)
+	const quote = quotes.message;
+	console.log(quote)
+	
+	twitter.addEventListener('click', function(){
+		twitter.href = `https://twitter.com/intent/tweet?text=${quote} - Donald Trump`
+	});
+
 
 	display.innerHTML = `<div>
-	${quote}
-	${author}
+		${quote}
+		- Donald Trump
 	</div>`
-}
+};
+
 
 button.addEventListener('click', function(){
 	render();
